@@ -4,6 +4,8 @@ class InitState extends AppStates {}
 
 class AppChangeBottomNavState extends AppStates {}
 
+class AppChangeModeState extends AppStates {}
+
 class AppCreateDatabaseState extends AppStates {}
 
 class AppGetDatabaseState extends AppStates {}
