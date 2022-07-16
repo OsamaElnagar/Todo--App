@@ -15,3 +15,9 @@ class AppUpdateDatabaseState extends AppStates {}
 class AppDeleteDatabaseState extends AppStates {}
 
 class AppChangeBottomSheetState extends AppStates{}
+
+class AppNewTaskPositionState extends AppStates{}
+
+class AppDoneTaskPositionState extends AppStates{}
+
+class AppArchivedTaskPositionState extends AppStates{}
