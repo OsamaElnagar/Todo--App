@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo1/shared/Cubit/states.dart';
-
+import 'package:todo1/shared/network/remote/cache_helper.dart';
 import '../../modules/archivedTaskScreen.dart';
 import '../../modules/doneTaskScreen.dart';
 import '../../modules/newTaskScreen.dart';
@@ -39,7 +39,20 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppChangeBottomNavState());
       emit(AppArchivedTaskPositionState());
     }
-    
+  }
+
+  bool isDark = true;
+
+  void changeAppMode({bool? fromShared}) {
+    if (fromShared != null) {
+      isDark = fromShared;
+      emit(AppChangeModeState());
+    } else {
+      isDark = !isDark;
+      CacheHelper.putData('isDark', isDark).then((value) {
+        emit(AppChangeModeState());
+      });
+    }
   }
 
   List<Map> newTasks = [];
@@ -71,6 +84,7 @@ class AppCubit extends Cubit<AppStates> {
     ).then((value) {
       database = value;
       emit(AppCreateDatabaseState());
+      emit(AppNewTaskPositionState());
     });
   }
 

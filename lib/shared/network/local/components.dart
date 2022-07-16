@@ -17,22 +17,20 @@ Widget ItemBuilder(Map model, context) => BlocConsumer<AppCubit, AppStates>(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Card(
               elevation: 4.0,
-              color: Colors.blue,
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.white,
-                      radius: 50,
+                      radius: 48,
                       child: CircleAvatar(
-                        backgroundColor: Colors.blue,
                         radius: 45,
                         child: Text(
                           '${model['time']}',
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                          ),
+                          style: Theme.of(context).textTheme.headline5,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -45,50 +43,53 @@ Widget ItemBuilder(Map model, context) => BlocConsumer<AppCubit, AppStates>(
                       children: [
                         Text(
                           '${model['title']}',
-                          style: const TextStyle(
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '${model['date']}',
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                          ),
+                          style:Theme.of(context)
+                              .textTheme
+                              .subtitle1,
                         ),
                       ],
                     ),
                     const SizedBox(
                       width: 10.0,
                     ),
+                    Spacer(),
                     if (states is AppNewTaskPositionState)
                       positionTransform(
                         model: model,
-                        pressed1: (){
+                        pressed1: () {
                           AppCubit.get(context).updateData('done', model['id']);
                         },
                         pressed2: () {
-                          AppCubit.get(context).updateData('archived', model['id']);
+                          AppCubit.get(context)
+                              .updateData('archived', model['id']);
                         },
                         icon1: const Icon(Icons.check_circle),
                         icon2: const Icon(Icons.archive),
                       ),
                     if (states is AppDoneTaskPositionState)
-                    positionTransform(
-                      model: model,
-                      pressed1: (){
-                        AppCubit.get(context).updateData('new', model['id']);
-                      },
-                      pressed2: () {
-                        AppCubit.get(context).updateData('archived', model['id']);
-                      },
-                      icon1: const Icon(Icons.menu),
-                      icon2: const Icon(Icons.archive),
-                    ),
+                      positionTransform(
+                        model: model,
+                        pressed1: () {
+                          AppCubit.get(context).updateData('new', model['id']);
+                        },
+                        pressed2: () {
+                          AppCubit.get(context)
+                              .updateData('archived', model['id']);
+                        },
+                        icon1: const Icon(Icons.menu),
+                        icon2: const Icon(Icons.archive),
+                      ),
                     if (states is AppArchivedTaskPositionState)
                       positionTransform(
                         model: model,
-                        pressed1: (){
+                        pressed1: () {
                           AppCubit.get(context).updateData('done', model['id']);
                         },
                         pressed2: () {
