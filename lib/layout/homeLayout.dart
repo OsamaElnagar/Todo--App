@@ -4,8 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:todo1/shared/Cubit/cubit.dart';
 import 'package:todo1/shared/Cubit/states.dart';
 
-
-
 class HomeLayout extends StatelessWidget {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   var formKey = GlobalKey<FormState>();
@@ -21,10 +19,8 @@ class HomeLayout extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => AppCubit()..createDatabase(),
       child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, AppStates state)
-        {
-          if( state is AppInsertDatabaseState)
-          {
+        listener: (BuildContext context, AppStates state) {
+          if (state is AppInsertDatabaseState) {
             Navigator.pop(context);
           }
         },
@@ -33,12 +29,11 @@ class HomeLayout extends StatelessWidget {
           return Scaffold(
             key: scaffoldKey,
             appBar: AppBar(
-              title: Text('TODO:${cubit.titles[cubit.currentIndex]}'),
-              centerTitle: true,
-
+              title: Text('TODO: ${cubit.titles[cubit.currentIndex]}'),
             ),
             body: cubit.screens[cubit.currentIndex],
             floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.blue,
               onPressed: () {
                 if (cubit.isBottomSheetShown) {
                   if (formKey.currentState!.validate()) {
@@ -141,9 +136,15 @@ class HomeLayout extends StatelessWidget {
                       )
                       .closed
                       .then((value) {
-                    cubit.changeBottomSheetState(false, Icons.edit,);
+                    cubit.changeBottomSheetState(
+                      false,
+                      Icons.edit,
+                    );
                   });
-                  cubit.changeBottomSheetState(true, Icons.add,);
+                  cubit.changeBottomSheetState(
+                    true,
+                    Icons.add,
+                  );
                 }
               },
               child: Icon(
@@ -162,20 +163,19 @@ class HomeLayout extends StatelessWidget {
                   icon: Icon(
                     Icons.storage_rounded,
                   ),
-                  label: 'new tasks',
+                  label: 'NEW',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.check_circle_outline,
                   ),
-                  label: 'done tasks',
+                  label: 'DONE',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.archive,
                   ),
-                  label: 'archived tasks',
-
+                  label: 'ARCHIVED',
                 ),
               ],
             ),

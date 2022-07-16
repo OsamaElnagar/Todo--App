@@ -18,14 +18,28 @@ class AppCubit extends Cubit<AppStates> {
     ArchivedTasksScreen()
   ];
   List<String> titles = [
-    ' new tasks',
-    ' done tasks',
-    ' archived tasks',
+    'New',
+    'Done',
+    'Archived',
   ];
 
   void changeIndex(int index) {
-    currentIndex = index;
-    emit(AppChangeBottomNavState());
+    if (index == 0) {
+      currentIndex = index;
+      emit(AppChangeBottomNavState());
+      emit(AppNewTaskPositionState());
+    }
+    if (index == 1) {
+      currentIndex = index;
+      emit(AppChangeBottomNavState());
+      emit(AppDoneTaskPositionState());
+    }
+    if (index == 2) {
+      currentIndex = index;
+      emit(AppChangeBottomNavState());
+      emit(AppArchivedTaskPositionState());
+    }
+    
   }
 
   List<Map> newTasks = [];
@@ -99,8 +113,8 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   updateData(String status, int id) async {
-    database!.rawUpdate('UPDATE Tasks SET status = ? WHERE id = ?',
-        ['$status', id]).then((value) {
+    database!.rawUpdate(
+        'UPDATE Tasks SET status = ? WHERE id = ?', [status, id]).then((value) {
       getFromDatabase(database);
       emit(AppUpdateDatabaseState());
     });
