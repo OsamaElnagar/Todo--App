@@ -3,14 +3,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:todo1/shared/Cubit/cubit.dart';
 import 'package:todo1/shared/Cubit/states.dart';
+import 'package:hexcolor/hexcolor.dart';
 
-class HomeLayout extends StatelessWidget {
+class HomeLayout extends StatefulWidget {
   HomeLayout({Key? key}) : super(key: key);
+
+  @override
+  State<HomeLayout> createState() => _HomeLayoutState();
+}
+
+class _HomeLayoutState extends State<HomeLayout> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   var formKey = GlobalKey<FormState>();
+
   var titleController = TextEditingController();
+
   var timeController = TextEditingController();
+
   var dateController = TextEditingController();
+
+  @override
+  dispose() {
+    titleController.dispose();
+    timeController.dispose();
+    dateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +91,13 @@ class HomeLayout extends StatelessWidget {
                                   }
                                   return null;
                                 },
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  label: Text('title'),
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  hoverColor: HexColor('#082144'),
+                                  label: const Text('title'),
                                   prefixIcon: Icon(
                                     Icons.title,
-                                    color: Colors.blue,
+                                    color: HexColor('#082144'),
                                   ),
                                 ),
                               ),
@@ -102,11 +122,13 @@ class HomeLayout extends StatelessWidget {
                                   }
                                   return null;
                                 },
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  label: Text('time'),
-                                  prefixIcon: Icon(Icons.watch_later,
-                                      color: Colors.blue),
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  label: const Text('time'),
+                                  prefixIcon: Icon(
+                                    Icons.watch_later,
+                                    color: HexColor('#082144'),
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -132,11 +154,13 @@ class HomeLayout extends StatelessWidget {
                                   }
                                   return null;
                                 },
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  label: Text('date'),
-                                  prefixIcon: Icon(Icons.date_range,
-                                      color: Colors.blue),
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  label: const Text('date'),
+                                  prefixIcon: Icon(
+                                    Icons.date_range,
+                                    color: HexColor('#082144'),
+                                  ),
                                 ),
                               ),
                             ],

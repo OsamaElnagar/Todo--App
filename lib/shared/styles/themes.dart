@@ -35,6 +35,12 @@ ThemeData darkTheme = ThemeData(
     elevation: 30.0,
     backgroundColor: HexColor('#082144'),
   ),
+  bottomSheetTheme: BottomSheetThemeData(
+    backgroundColor: Colors.blue,
+  ),
+  timePickerTheme:TimePickerThemeData(
+    backgroundColor: Colors.blue,
+  ) ,
   textTheme: const TextTheme(
     bodyText1: TextStyle(
       fontSize: 12,
@@ -86,6 +92,9 @@ ThemeData lightTheme = ThemeData(
     elevation: 30.0,
     backgroundColor: Colors.white,
   ),
+  bottomSheetTheme: const BottomSheetThemeData(
+      //backgroundColor: HexColor('#082144'),
+      ),
   textTheme: const TextTheme(
     bodyText1: TextStyle(
       color: Colors.white,
