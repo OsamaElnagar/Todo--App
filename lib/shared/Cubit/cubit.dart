@@ -6,6 +6,7 @@ import 'package:todo1/shared/network/remote/cache_helper.dart';
 import '../../modules/archivedTaskScreen.dart';
 import '../../modules/doneTaskScreen.dart';
 import '../../modules/newTaskScreen.dart';
+import '../network/local/components.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(InitState());
@@ -65,20 +66,20 @@ class AppCubit extends Cubit<AppStates> {
     openDatabase(
       'todo.db',
       onCreate: (Database database, int version) {
-        print('database created');
+        pint('database created');
         database
             .execute(
           " Create TABLE Tasks(id INTEGER PRIMARY KEY,title TEXT,time TEXT, date TEXT,status TEXT)",
         )
             .then((value) {
-          print(' TABLE CREATED');
+          pint(' TABLE CREATED');
         }).catchError((onError) {
-          print(" Error While Creating TABLE ${onError.toString()}");
+          pint(" Error While Creating TABLE ${onError.toString()}");
         });
       },
       onOpen: (database) {
         getFromDatabase(database);
-        print('database open');
+        pint('database open');
       },
       version: 1,
     ).then((value) {
@@ -99,11 +100,11 @@ class AppCubit extends Cubit<AppStates> {
         'INSERT INTO Tasks (title, time, date, status) VALUES("$title","$time","$date","new")',
       )
           .then((value) {
-        print('$value Inserted Successfully');
+        pint('$value Inserted Successfully');
         getFromDatabase(database);
         emit(AppInsertDatabaseState());
       }).catchError((onError) {
-        print('Error While Inserting New Record${onError.toString()}');
+        pint('Error While Inserting New Record${onError.toString()}');
       });
     });
   }

@@ -50,9 +50,7 @@ Widget ItemBuilder(Map model, context) => BlocConsumer<AppCubit, AppStates>(
                         ),
                         Text(
                           '${model['date']}',
-                          style:Theme.of(context)
-                              .textTheme
-                              .subtitle1,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ],
                     ),
@@ -177,4 +175,8 @@ Widget positionTransform({
       );
     },
   );
+}
+
+void pint(String text) {
+  debugPrint(text.toString());
 }
