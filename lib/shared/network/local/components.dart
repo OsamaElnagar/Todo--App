@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo1/shared/Cubit/cubit.dart';
 import 'package:todo1/shared/Cubit/states.dart';
 
-
-
 Widget ItemBuilder(Map model, context) => BlocConsumer<AppCubit, AppStates>(
       listener: (context, states) {},
       builder: (context, states) {
@@ -171,7 +169,6 @@ Widget ItemBuilder(Map model, context) => BlocConsumer<AppCubit, AppStates>(
       },
     );
 
-
 Widget conditionalTaskBuilder(List<Map> tasks) => ConditionalBuilder(
       condition: tasks.isNotEmpty,
       fallback: (context) => Center(
@@ -205,7 +202,6 @@ Widget conditionalTaskBuilder(List<Map> tasks) => ConditionalBuilder(
               ),
           itemCount: tasks.length),
     );
-
 
 Widget positionTransform(
     {required Map model,
@@ -260,11 +256,9 @@ Widget positionTransform(
   );
 }
 
-
 void pint(String text) {
   debugPrint(text.toString());
 }
-
 
 void dialogMessage(
     {required BuildContext context,

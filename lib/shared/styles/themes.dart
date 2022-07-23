@@ -106,6 +106,7 @@ ThemeData lightTheme = ThemeData(
     caption: TextStyle(color: Colors.black),
     headline4: TextStyle(color: Colors.white),
     headline5: TextStyle(color: Colors.white),
+    headline6: TextStyle(color: Colors.white),
   ),
   cardTheme: const CardTheme(
     color: Colors.blue,

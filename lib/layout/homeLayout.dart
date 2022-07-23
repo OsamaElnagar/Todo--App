@@ -26,10 +26,9 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   void initState() {
-
-    //AppCubit.get(context).emit(AppNewTaskPositionState());
     super.initState();
   }
+
   @override
   dispose() {
     titleController.dispose();
@@ -72,15 +71,16 @@ class _HomeLayoutState extends State<HomeLayout> {
             backgroundColor: Colors.blue,
             onPressed: () {
               if (cubit.isBottomSheetShown) {
-                if (formKey.currentState!.validate()){
+                if (formKey.currentState!.validate()) {
                   cubit.insertToDatabase(
                     titleController.text,
                     timeController.text,
                     dateController.text,
                   );
-                  titleController.text=
-              timeController.text=
-              dateController.text='';
+                  cubit.emit(AppNewTaskPositionState());
+
+                  titleController.text =
+                      timeController.text = dateController.text = '';
                 }
               } else {
                 scaffoldKey.currentState!
@@ -103,10 +103,11 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 },
                                 decoration: InputDecoration(
                                   border: const OutlineInputBorder(
-
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
                                   ),
                                   hoverColor: Colors.black,
-                                  focusColor:  Colors.black,
+                                  focusColor: Colors.black,
                                   label: const Text('title'),
                                   prefixIcon: Icon(
                                     Icons.title,
@@ -115,9 +116,14 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 5.0,
+                                height: 10.0,
                               ),
                               TextFormField(
+                                showCursor: true,
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                ),
                                 onTap: () {
                                   showTimePicker(
                                     context: context,
@@ -132,13 +138,17 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 validator: (value) {
                                   pint(TimeOfDay.now().toString());
                                   if (value!.isEmpty) {
-                                    return timeController.text =TimeOfDay.now().format(context).toString();
-
+                                    return timeController.text = TimeOfDay.now()
+                                        .format(context)
+                                        .toString();
                                   }
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                  ),
                                   label: const Text('time'),
                                   prefixIcon: Icon(
                                     Icons.watch_later,
@@ -147,7 +157,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 5.0,
+                                height: 10.0,
                               ),
                               TextFormField(
                                 onTap: () {
@@ -165,13 +175,18 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 keyboardType: TextInputType.datetime,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return dateController.text = DateFormat.yMMMd().format(DateTime.now()).toString();
-
+                                    return dateController.text =
+                                        DateFormat.yMMMd()
+                                            .format(DateTime.now())
+                                            .toString();
                                   }
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                  ),
                                   label: const Text('date'),
                                   prefixIcon: Icon(
                                     Icons.date_range,
@@ -186,15 +201,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                     )
                     .closed
                     .then((value) {
-                  cubit.changeBottomSheetState(
-                    false,
-                    Icons.edit,
-                  );
+                  cubit.changeBottomSheetState(false, Icons.edit);
+                  cubit.emit(AppNewTaskPositionState());
                 });
-                cubit.changeBottomSheetState(
-                  true,
-                  Icons.add,
-                );
+                cubit.changeBottomSheetState(true, Icons.add);
               }
             },
             child: Icon(
