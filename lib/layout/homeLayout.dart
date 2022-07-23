@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:todo1/shared/Cubit/cubit.dart';
 import 'package:todo1/shared/Cubit/states.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:todo1/shared/network/local/components.dart';
 
 class HomeLayout extends StatefulWidget {
   HomeLayout({Key? key}) : super(key: key);
@@ -23,6 +24,12 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   var dateController = TextEditingController();
 
+  @override
+  void initState() {
+
+    //AppCubit.get(context).emit(AppNewTaskPositionState());
+    super.initState();
+  }
   @override
   dispose() {
     titleController.dispose();
@@ -65,12 +72,15 @@ class _HomeLayoutState extends State<HomeLayout> {
             backgroundColor: Colors.blue,
             onPressed: () {
               if (cubit.isBottomSheetShown) {
-                if (formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()){
                   cubit.insertToDatabase(
                     titleController.text,
                     timeController.text,
                     dateController.text,
                   );
+                  titleController.text=
+              timeController.text=
+              dateController.text='';
                 }
               } else {
                 scaffoldKey.currentState!
@@ -92,8 +102,11 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
-                                  hoverColor: HexColor('#082144'),
+                                  border: const OutlineInputBorder(
+
+                                  ),
+                                  hoverColor: Colors.black,
+                                  focusColor:  Colors.black,
                                   label: const Text('title'),
                                   prefixIcon: Icon(
                                     Icons.title,
@@ -117,8 +130,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 controller: timeController,
                                 keyboardType: TextInputType.datetime,
                                 validator: (value) {
+                                  pint(TimeOfDay.now().toString());
                                   if (value!.isEmpty) {
-                                    return ' title must not be empty';
+                                    return timeController.text =TimeOfDay.now().format(context).toString();
+
                                   }
                                   return null;
                                 },
@@ -150,7 +165,8 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 keyboardType: TextInputType.datetime,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return 'Title must not be ';
+                                    return dateController.text = DateFormat.yMMMd().format(DateTime.now()).toString();
+
                                   }
                                   return null;
                                 },

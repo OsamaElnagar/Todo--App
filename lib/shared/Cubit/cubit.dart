@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,20 +10,20 @@ import '../../modules/newTaskScreen.dart';
 import '../network/local/components.dart';
 
 class AppCubit extends Cubit<AppStates> {
+
   AppCubit() : super(InitState());
 
   static AppCubit get(context) => BlocProvider.of(context);
+
   int currentIndex = 0;
+
   List<Widget> screens = const [
     NewTasksScreen(),
     DoneTasksScreen(),
     ArchivedTasksScreen()
   ];
-  List<String> titles = [
-    'New',
-    'Done',
-    'Archived',
-  ];
+
+  List<String> titles = ['New', 'Done', 'Archived'];
 
   void changeIndex(int index) {
     if (index == 0) {
@@ -89,11 +90,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  Future<void> insertToDatabase(
-    String title,
-    String time,
-    String date,
-  ) {
+  Future<void> insertToDatabase(String title, String time, String date) {
     return database!.transaction((txn) async {
       return await txn
           .rawInsert(
@@ -124,6 +121,7 @@ class AppCubit extends Cubit<AppStates> {
         }
       });
       emit(AppGetDatabaseState());
+      emit(AppNewTaskPositionState());
     });
   }
 
@@ -149,5 +147,9 @@ class AppCubit extends Cubit<AppStates> {
     isBottomSheetShown = isShow;
     fabIcon = icon;
     emit(AppChangeBottomSheetState());
+  }
+
+  void emitAll() {
+    emit(AppNewTaskPositionState());
   }
 }

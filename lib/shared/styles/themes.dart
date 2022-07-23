@@ -6,21 +6,21 @@ import 'colors.dart';
 ThemeData darkTheme = ThemeData(
   primarySwatch: myColor,
   scaffoldBackgroundColor: HexColor('#082144'),
-  appBarTheme: AppBarTheme(
-    actionsIconTheme: const IconThemeData(
+  appBarTheme: const AppBarTheme(
+    actionsIconTheme: IconThemeData(
       color: Colors.white,
     ),
-    titleTextStyle: const TextStyle(
+    titleTextStyle: TextStyle(
       color: Colors.white,
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
     ),
-    iconTheme: const IconThemeData(
+    iconTheme: IconThemeData(
       color: Colors.white,
     ),
-    backgroundColor: HexColor('#082144'),
+    backgroundColor: Colors.blue,
     elevation: 0.0,
-    systemOverlayStyle: const SystemUiOverlayStyle(
+    systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: myColor,
       statusBarBrightness: Brightness.dark,
     ),
@@ -54,6 +54,7 @@ ThemeData darkTheme = ThemeData(
     caption: TextStyle(color: Colors.white),
     headline4: TextStyle(color: Colors.white),
     headline5: TextStyle(color: Colors.white),
+    headline6: TextStyle(color: Colors.white),
   ),
   cardTheme: const CardTheme(
     color: Colors.blue,
