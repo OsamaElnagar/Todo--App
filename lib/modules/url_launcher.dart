@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo1/shared/network/local/components.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class URLLauncher extends StatefulWidget {
@@ -133,6 +134,15 @@ class _URLLauncherState extends State<URLLauncher> {
               height: 30.0,
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          generateToken();
+        },
+        child: const Icon(
+          Icons.add,
+          size:30.0,
         ),
       ),
     );

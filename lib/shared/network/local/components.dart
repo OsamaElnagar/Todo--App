@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -272,4 +274,10 @@ void dialogMessage(
             content: content,
             actions: actions,
           ));
+}
+
+Random random = Random();
+
+void generateToken() {
+  pint(random.nextDouble().toString());
 }

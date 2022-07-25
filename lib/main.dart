@@ -46,10 +46,10 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.light : ThemeMode.dark,
             home: AnimatedSplashScreen(
-              nextScreen: HomeLayout(),
+              nextScreen: URLLauncher(),
               backgroundColor: Colors.indigo,
               splash: const SplashScreen(),
-              duration: 9000,
+              duration: 2000,
             ),
           );
         },
