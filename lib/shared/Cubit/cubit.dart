@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -6,22 +7,23 @@ import 'package:todo1/shared/network/remote/cache_helper.dart';
 import '../../modules/archivedTaskScreen.dart';
 import '../../modules/doneTaskScreen.dart';
 import '../../modules/newTaskScreen.dart';
+import '../network/local/components.dart';
 
 class AppCubit extends Cubit<AppStates> {
+
   AppCubit() : super(InitState());
 
   static AppCubit get(context) => BlocProvider.of(context);
+
   int currentIndex = 0;
+
   List<Widget> screens = const [
     NewTasksScreen(),
     DoneTasksScreen(),
     ArchivedTasksScreen()
   ];
-  List<String> titles = [
-    'New',
-    'Done',
-    'Archived',
-  ];
+
+  List<String> titles = ['New', 'Done', 'Archived'];
 
   void changeIndex(int index) {
     if (index == 0) {
@@ -65,20 +67,20 @@ class AppCubit extends Cubit<AppStates> {
     openDatabase(
       'todo.db',
       onCreate: (Database database, int version) {
-        print('database created');
+        pint('database created');
         database
             .execute(
           " Create TABLE Tasks(id INTEGER PRIMARY KEY,title TEXT,time TEXT, date TEXT,status TEXT)",
         )
             .then((value) {
-          print(' TABLE CREATED');
+          pint(' TABLE CREATED');
         }).catchError((onError) {
-          print(" Error While Creating TABLE ${onError.toString()}");
+          pint(" Error While Creating TABLE ${onError.toString()}");
         });
       },
       onOpen: (database) {
         getFromDatabase(database);
-        print('database open');
+        pint('database open');
       },
       version: 1,
     ).then((value) {
@@ -88,22 +90,18 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  Future<void> insertToDatabase(
-    String title,
-    String time,
-    String date,
-  ) {
+  Future<void> insertToDatabase(String title, String time, String date) {
     return database!.transaction((txn) async {
       return await txn
           .rawInsert(
         'INSERT INTO Tasks (title, time, date, status) VALUES("$title","$time","$date","new")',
       )
           .then((value) {
-        print('$value Inserted Successfully');
+        pint('$value Inserted Successfully');
         getFromDatabase(database);
         emit(AppInsertDatabaseState());
       }).catchError((onError) {
-        print('Error While Inserting New Record${onError.toString()}');
+        pint('Error While Inserting New Record${onError.toString()}');
       });
     });
   }
@@ -123,6 +121,7 @@ class AppCubit extends Cubit<AppStates> {
         }
       });
       emit(AppGetDatabaseState());
+      emit(AppNewTaskPositionState());
     });
   }
 
@@ -148,5 +147,9 @@ class AppCubit extends Cubit<AppStates> {
     isBottomSheetShown = isShow;
     fabIcon = icon;
     emit(AppChangeBottomSheetState());
+  }
+
+  void emitAll() {
+    emit(AppNewTaskPositionState());
   }
 }

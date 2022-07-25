@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:todo1/shared/Cubit/cubit.dart';
 import 'package:todo1/shared/Cubit/states.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:todo1/shared/network/local/components.dart';
 
 class HomeLayout extends StatefulWidget {
   HomeLayout({Key? key}) : super(key: key);
@@ -22,6 +23,11 @@ class _HomeLayoutState extends State<HomeLayout> {
   var timeController = TextEditingController();
 
   var dateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   dispose() {
@@ -71,6 +77,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                     timeController.text,
                     dateController.text,
                   );
+                  cubit.emit(AppNewTaskPositionState());
+
+                  titleController.text =
+                      timeController.text = dateController.text = '';
                 }
               } else {
                 scaffoldKey.currentState!
@@ -92,8 +102,12 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
-                                  hoverColor: HexColor('#082144'),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                  ),
+                                  hoverColor: Colors.black,
+                                  focusColor: Colors.black,
                                   label: const Text('title'),
                                   prefixIcon: Icon(
                                     Icons.title,
@@ -102,9 +116,14 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 5.0,
+                                height: 10.0,
                               ),
                               TextFormField(
+                                showCursor: true,
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                ),
                                 onTap: () {
                                   showTimePicker(
                                     context: context,
@@ -117,13 +136,19 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 controller: timeController,
                                 keyboardType: TextInputType.datetime,
                                 validator: (value) {
+                                  pint(TimeOfDay.now().toString());
                                   if (value!.isEmpty) {
-                                    return ' title must not be empty';
+                                    return timeController.text = TimeOfDay.now()
+                                        .format(context)
+                                        .toString();
                                   }
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                  ),
                                   label: const Text('time'),
                                   prefixIcon: Icon(
                                     Icons.watch_later,
@@ -132,7 +157,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 5.0,
+                                height: 10.0,
                               ),
                               TextFormField(
                                 onTap: () {
@@ -150,12 +175,18 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 keyboardType: TextInputType.datetime,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return 'Title must not be ';
+                                    return dateController.text =
+                                        DateFormat.yMMMd()
+                                            .format(DateTime.now())
+                                            .toString();
                                   }
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
+                                  border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                  ),
                                   label: const Text('date'),
                                   prefixIcon: Icon(
                                     Icons.date_range,
@@ -170,15 +201,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                     )
                     .closed
                     .then((value) {
-                  cubit.changeBottomSheetState(
-                    false,
-                    Icons.edit,
-                  );
+                  cubit.changeBottomSheetState(false, Icons.edit);
+                  cubit.emit(AppNewTaskPositionState());
                 });
-                cubit.changeBottomSheetState(
-                  true,
-                  Icons.add,
-                );
+                cubit.changeBottomSheetState(true, Icons.add);
               }
             },
             child: Icon(

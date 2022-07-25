@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,8 @@ import 'package:todo1/shared/network/local/blocObserver.dart';
 import 'package:todo1/shared/network/remote/cache_helper.dart';
 import 'package:todo1/shared/styles/themes.dart';
 import 'layout/homeLayout.dart';
+import 'modules/splash.dart';
+import 'modules/url_launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +45,12 @@ class MyApp extends StatelessWidget {
             darkTheme: darkTheme,
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.light : ThemeMode.dark,
-            home: HomeLayout(),
+            home: AnimatedSplashScreen(
+              nextScreen: HomeLayout(),
+              backgroundColor: Colors.indigo,
+              splash: const SplashScreen(),
+              duration: 9000,
+            ),
           );
         },
       ),
