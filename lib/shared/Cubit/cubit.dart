@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -10,7 +9,6 @@ import '../../modules/newTaskScreen.dart';
 import '../network/local/components.dart';
 
 class AppCubit extends Cubit<AppStates> {
-
   AppCubit() : super(InitState());
 
   static AppCubit get(context) => BlocProvider.of(context);
@@ -43,6 +41,13 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
+  Color? itemTimeColor = Colors.blue[800];
+
+  void changeItemTimeColor(Color color) {
+    itemTimeColor = color;
+    emit(AppItemTimeColorState());
+  }
+
   bool isDark = true;
 
   void changeAppMode({bool? fromShared}) {
@@ -70,9 +75,10 @@ class AppCubit extends Cubit<AppStates> {
         pint('database created');
         database
             .execute(
-          " Create TABLE Tasks(id INTEGER PRIMARY KEY,title TEXT,time TEXT, date TEXT,status TEXT)",
+          " Create TABLE Tasks(id INTEGER PRIMARY KEY,title TEXT,time TEXT, date TEXT,status TEXT,color COLOR)",
         )
             .then((value) {
+
           pint(' TABLE CREATED');
         }).catchError((onError) {
           pint(" Error While Creating TABLE ${onError.toString()}");
@@ -90,18 +96,19 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  Future<void> insertToDatabase(String title, String time, String date) {
+  Future<void> insertToDatabase(
+      String title, String time, String date, Color color) {
     return database!.transaction((txn) async {
       return await txn
           .rawInsert(
-        'INSERT INTO Tasks (title, time, date, status) VALUES("$title","$time","$date","new")',
+        'INSERT INTO Tasks (title, time, date, status, color) VALUES("$title","$time","$date","new","$color")',
       )
           .then((value) {
         pint('$value Inserted Successfully');
         getFromDatabase(database);
         emit(AppInsertDatabaseState());
       }).catchError((onError) {
-        pint('Error While Inserting New Record${onError.toString()}');
+        pint('Error While Inserting New Record ${onError.toString()}');
       });
     });
   }

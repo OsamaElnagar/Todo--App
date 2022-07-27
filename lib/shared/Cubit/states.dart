@@ -23,3 +23,5 @@ class AppNewTaskPositionState extends AppStates{}
 class AppDoneTaskPositionState extends AppStates{}
 
 class AppArchivedTaskPositionState extends AppStates{}
+
+class AppItemTimeColorState extends AppStates{}

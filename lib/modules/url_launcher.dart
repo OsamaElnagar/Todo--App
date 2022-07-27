@@ -96,7 +96,7 @@ class _URLLauncherState extends State<URLLauncher> {
               height: 30.0,
             ),
             MaterialButton(
-              color: Colors.yellow,
+              color: Color(0xfff44336),
               onPressed: _launchUrlEmail,
               child: const Icon(
                 Icons.email,

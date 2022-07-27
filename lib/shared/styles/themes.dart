@@ -36,7 +36,7 @@ ThemeData darkTheme = ThemeData(
     backgroundColor: HexColor('#082144'),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.white,
   ),
   timePickerTheme:const TimePickerThemeData(
     backgroundColor: Colors.blue,
