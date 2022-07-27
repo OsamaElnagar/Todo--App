@@ -5,6 +5,7 @@ import 'package:todo1/shared/Cubit/cubit.dart';
 import 'package:todo1/shared/Cubit/states.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo1/shared/network/local/components.dart';
+import 'package:todo1/shared/styles/colors.dart';
 
 class HomeLayout extends StatefulWidget {
   HomeLayout({Key? key}) : super(key: key);
@@ -55,6 +56,7 @@ class _HomeLayoutState extends State<HomeLayout> {
               IconButton(
                 onPressed: () {
                   AppCubit.get(context).changeAppMode();
+
                 },
                 icon: AppCubit.get(context).isDark
                     ? const Icon(
@@ -76,6 +78,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                     titleController.text,
                     timeController.text,
                     dateController.text,
+                    cubit.itemTimeColor!,
                   );
                   cubit.emit(AppNewTaskPositionState());
 
@@ -192,6 +195,53 @@ class _HomeLayoutState extends State<HomeLayout> {
                                     Icons.date_range,
                                     color: HexColor('#082144'),
                                   ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  children: [
+                                    const Text('How much important?'),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        cubit.changeItemTimeColor(blueColor!);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 20.0,
+                                        backgroundColor: blueColor,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        cubit.changeItemTimeColor(orangeColor);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 20.0,
+                                        backgroundColor: orangeColor,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        cubit.changeItemTimeColor(redColor);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 20.0,
+                                        backgroundColor: redColor,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8.0,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],

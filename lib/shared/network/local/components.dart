@@ -1,4 +1,4 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+import 'dart:math';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,6 +81,7 @@ Widget ItemBuilder(Map model, context) => BlocConsumer<AppCubit, AppStates>(
                       backgroundColor: Colors.yellow,
                       radius: 48,
                       child: CircleAvatar(
+                        backgroundColor:Color(int.parse(model['color'].split('(0x')[1].split(')')[0], radix: 16)),
                         radius: 45,
                         child: Text(
                           '${model['time']}',
@@ -127,7 +128,16 @@ Widget ItemBuilder(Map model, context) => BlocConsumer<AppCubit, AppStates>(
                         model: model,
                         pressed1: () {
                           AppCubit.get(context).updateData('done', model['id']);
+                          String stringColor = model['color'];
+                          String valueString =
+                          stringColor.split('(0x')[1].split(')')[0]; // kind of hacky..
+                          pint(valueString);
+                          int value = int.parse(valueString, radix: 16);
+                          pint(value.toString());
+                         int r = int.parse(model['color'].split('(0x')[1].split(')')[0], radix: 16);
+                          pint(r.toString());
                         },
+
                         pressed2: () {
                           AppCubit.get(context)
                               .updateData('archived', model['id']);
@@ -272,4 +282,10 @@ void dialogMessage(
             content: content,
             actions: actions,
           ));
+}
+
+Random random = Random();
+
+void generateToken() {
+  pint(random.nextDouble().toString());
 }
